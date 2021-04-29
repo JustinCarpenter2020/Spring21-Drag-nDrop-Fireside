@@ -1,5 +1,5 @@
 <template>
-  <div class="Rooms col-6 py-2">
+  <div class="Rooms col-6 py-2" dropzone="zone" draggable="true" @dragover.prevent @drop.prevent="moveItem">
     <div class="row justify-content-center">
       <div class="col-3 text-light bg-info rounded-pill p-1">
         {{ roomData.name }}
@@ -11,6 +11,7 @@
         :key="item.id"
         :room-id="roomData.id"
         :item-data="item"
+        draggable="true"
       />
     </transition-group>
   </div>
@@ -20,6 +21,7 @@
 import { reactive, computed } from 'vue'
 import Items from '../components/Item'
 import { AppState } from '../AppState'
+import { itemService } from '../services/ItemService'
 export default {
   name: 'Rooms',
   props: ['roomData'],
@@ -31,7 +33,13 @@ export default {
       items: computed(() => AppState.rooms[props.roomData.id].items),
       itemToMove: computed(() => AppState.tempItem)
     })
-    return { state }
+    return {
+      state,
+      moveItem() {
+        console.log('AppState', AppState.tempItem, props.roomData.id)
+        itemService.moveItem(state.itemToMove.oldRoomId, props.roomData.id)
+      }
+    }
   }
 }
 </script>
