@@ -24,6 +24,5 @@ export const AppState = reactive({
     { id: 3, name: 'Kitchen', items: [] },
     { id: 4, name: 'Bathroom', items: [] },
     { id: 5, name: 'Garbage', items: [] }
-  ],
-  tempItem: {}
+  ]
 })

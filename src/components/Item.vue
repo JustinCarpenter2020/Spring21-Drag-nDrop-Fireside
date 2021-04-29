@@ -1,5 +1,5 @@
 <template>
-  <div class="col-1" @dragstart="moveItem">
+  <div class="col-1">
     <div class="item shadow">
       <img :src="itemData.url" alt="img" />
     </div>
@@ -8,19 +8,15 @@
 
 <script>
 import { reactive } from 'vue'
-import { itemService } from '../services/ItemService'
 export default {
   name: 'Item',
-  props: ['itemData', 'roomId'],
-  setup(props, { emit }) {
+  props: {
+    itemData: { type: Object, required: true },
+    roomId: { type: Number, required: true }
+  },
+  setup(props) {
     const state = reactive({})
-    function moveItem() {
-      console.log('item picked up', props.itemData.name)
-      // event.dataTransfer.setData('item', JSON.stringify(props.itemData))
-      // event.dataTransfer.setData('oldRoom', JSON.stringify(props.roomId))
-      itemService.setItemToMove(props.itemData, props.roomId)
-    }
-    return { state, moveItem }
+    return { state }
   }
 }
 </script>
